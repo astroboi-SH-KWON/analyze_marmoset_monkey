@@ -81,3 +81,18 @@ class Logics:
                             tmp_dict[trncrpt_id].append(tmp_p_str)
 
         return tmp_dict
+
+    def group_by_chromosome(self, data_dict, deli_str):
+        result_dict = {}
+        aqia_dict = {}
+        for trnscrpt_id, vals_arr in data_dict.items():
+            dscript = vals_arr[0]
+            chrsm = dscript[dscript.index(deli_str) + len(deli_str):].split(":")[0]
+
+            if chrsm in result_dict:
+                if trnscrpt_id not in result_dict[chrsm]:
+                    result_dict[chrsm].update({trnscrpt_id: vals_arr})
+            else:
+                result_dict.update({chrsm: {trnscrpt_id: vals_arr}})
+
+        return result_dict

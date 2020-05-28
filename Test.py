@@ -34,9 +34,7 @@ def test():
     logic = Logic.Logics()
     util = Util.Utils()
 
-    tmp_dict = logic.get_Deep_PE_input(REF_PATH + CDS_FILE, INIT_DEEP_PE)
 
-    util.make_Deep_PE_input_excel(WORK_DIR, tmp_dict, INIT_DEEP_PE)
 
 def test2():
     tmp_dict = {}
@@ -62,8 +60,8 @@ def test2():
 
 start_time = clock()
 print("start >>>>>>>>>>>>>>>>>>")
-# test()
-test2()
+test()
+# test2()
 print("::::::::::: %.2f seconds ::::::::::::::" % (clock() - start_time))
 
 

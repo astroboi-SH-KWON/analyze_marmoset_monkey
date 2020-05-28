@@ -19,29 +19,33 @@ class Utils:
         add_seq2_len = init_arr[3]
         pam_len = len(pam_seq)
 
-        workbook = openpyxl.Workbook()
-        sheet = workbook.active
+        for chr_key, val_dict in data_dict.items():
 
-        row = 1
-        sheet.cell(row=row, column=1, value="INDEX")
-        sheet.cell(row=row, column=2, value='Target gene name')
-        sheet.cell(row=row, column=3, value='Ensembl transcript ID')
-        sheet.cell(row=row, column=4, value='Target sequence')
-        # sheet.cell(row=row, column=5, value='gRNA binding')
-        # sheet.cell(row=row, column=6, value='PAM')
+            workbook = openpyxl.Workbook()
+            sheet = workbook.active
 
-        for trnscrpt_id, vals_arr in data_dict.items():
-            gene_name = ""
-            if "gene_symbol:" in vals_arr[0]:
-                gene_name = vals_arr[0][vals_arr[0].index("gene_symbol:") + len("gene_symbol:"):].split(" ")[0]
-            for trgt_idx in range(1, len(vals_arr)):
-                row += 1
-                sheet.cell(row=row, column=1, value=str(row - 1))
-                sheet.cell(row=row, column=2, value=gene_name)
-                sheet.cell(row=row, column=3, value=trnscrpt_id)
-                sheet.cell(row=row, column=4, value=vals_arr[trgt_idx])
-                # sheet.cell(row=row, column=5, value=vals_arr[trgt_idx][add_seq1_len: - pam_len - add_seq2_len])
-                # sheet.cell(row=row, column=6, value=vals_arr[trgt_idx][add_seq1_len + spacer_len: - add_seq2_len])
+            row = 1
+            sheet.cell(row=row, column=1, value="INDEX")
+            sheet.cell(row=row, column=2, value='Target gene name')
+            sheet.cell(row=row, column=3, value='Ensembl transcript ID')
+            sheet.cell(row=row, column=4, value='Target sequence')
+            # sheet.cell(row=row, column=5, value='gRNA binding')
+            # sheet.cell(row=row, column=6, value='PAM')
 
+            for trnscrpt_id, vals_arr in val_dict.items():
+                gene_name = ""
+                dscript = vals_arr[0]
 
-        workbook.save(filename=path + "_deep_pe_input_" + str(clock()) + self.ext_xlsx)
+                if "gene_symbol:" in dscript:
+                    gene_name = dscript[dscript.index("gene_symbol:") + len("gene_symbol:"):].split(" ")[0]
+                for trgt_idx in range(1, len(vals_arr)):
+                    row += 1
+                    sheet.cell(row=row, column=1, value=str(row - 1))
+                    sheet.cell(row=row, column=2, value=gene_name)
+                    sheet.cell(row=row, column=3, value=trnscrpt_id)
+                    sheet.cell(row=row, column=4, value=vals_arr[trgt_idx])
+                    # sheet.cell(row=row, column=5, value=vals_arr[trgt_idx][add_seq1_len: - pam_len - add_seq2_len])
+                    # sheet.cell(row=row, column=6, value=vals_arr[trgt_idx][add_seq1_len + spacer_len: - add_seq2_len])
+
+            # workbook.save(filename=path + "deep_pe_input_chr_" + str(chr_key) + "_" + str(clock()) + self.ext_xlsx)
+            workbook.save(filename=path + "deep_pe_input_chr_" + str(chr_key) + self.ext_xlsx)
