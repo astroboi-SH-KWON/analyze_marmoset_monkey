@@ -21,113 +21,49 @@ TEST_CHR = "D:/000_WORK/000_reference_path/monkey/chlorocebus_sabaeus/"
 chr_file_name = "chromosome/Chlorocebus_sabaeus.ChlSab1.1.dna.chromosome.X.fa"
 genbank_file_name = "genbank_anno/Chlorocebus_sabaeus.ChlSab1.1.99.chromosome.Y.dat"
 
-MUT_FILE = "Mutation_summary"
-WINDOW_SIZE = 1
-MAX_SEQ_LEN = 9
+FRONT_WIN_LEN = 4
+gRNA_LEN = 20
+PAM_SEQ = "NGG"
+BACK_WIN_LEN = 20
 
-# INITIAL_MAIN = [CHR_PATH, MAX_SEQ_LEN, WINDOW_SIZE]
+INIT_DEEP_PE = [PAM_SEQ, FRONT_WIN_LEN, gRNA_LEN, BACK_WIN_LEN]
+FILE_NUM_LIST = ['X']
 ############### end setting env ################
 
 def test():
-    idx = 1
-    flag = False
-    for seq_record in SeqIO.parse(REF_PATH + ANNO_FILE, "genbank"):
-        if flag:
-            break
-        print("id : " + seq_record.id)
-        # ['data_file_division', 'date', 'accessions', 'sequence_version', 'keywords', 'source', 'organism', 'taxonomy', 'comment']
-        print(seq_record.features)
-        seq_feature = seq_record.features
-        seq_f = seq_feature.__iter__()
-        while True:
-            try:
-                gene = next(seq_f)
-                print("")
-                print(gene)
-                idx += 1
-                print("idx  ::::::::::: " + str(idx))
-                if idx > 20:
-                    flag = True
-                    break
-                # if gene.type == 'gene':
-                #     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                #     if 'note' in gene.qualifiers:
-                #         print("Description : " + gene.qualifiers['note'][0])
-                #     if 'locus_tag' in gene.qualifiers:
-                #         print("Target gene name : " + gene.qualifiers['locus_tag'][0])
-                #
-                # if gene.type == 'CDS':
-                #     print(gene.location)
-                #     if 'gene' in gene.qualifiers:
-                #         print("Ensembl Gene ID : " + gene.qualifiers['gene'][0])
-                #     if 'note' in gene.qualifiers:
-                #         print("Ensembl transcript ID : " + gene.qualifiers['note'][0])
-            except StopIteration:
-                print("end file")
-                break
+    logic = Logic.Logics()
+    util = Util.Utils()
 
-def read_genbank():
-    for seq_record in SeqIO.parse(TEST_CHR + genbank_file_name, "genbank"):
-        print("id : " + seq_record.id)
-        # ['data_file_division', 'date', 'accessions', 'sequence_version', 'keywords', 'source', 'organism', 'taxonomy', 'comment']
-        print(seq_record.features)
-        seq_feature = seq_record.features
-        seq_f = seq_feature.__iter__()
-        while True:
-            try:
-                gene = next(seq_f)
-                # print(gene)
-                if gene.type == 'gene':
-                    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                    if 'note' in gene.qualifiers:
-                        print("Description : " + gene.qualifiers['note'][0])
-                    if 'locus_tag' in gene.qualifiers:
-                        print("Target gene name : " + gene.qualifiers['locus_tag'][0])
+    tmp_dict = logic.get_Deep_PE_input(REF_PATH + CDS_FILE, INIT_DEEP_PE)
 
-                if gene.type == 'CDS':
-                    print(gene.location)
-                    if 'gene' in gene.qualifiers:
-                        print("Ensembl Gene ID : " + gene.qualifiers['gene'][0])
-                    if 'note' in gene.qualifiers:
-                        print("Ensembl transcript ID : " + gene.qualifiers['note'][0])
-            except StopIteration:
-                print("end file")
-                break
+    util.make_Deep_PE_input_excel(WORK_DIR, tmp_dict, INIT_DEEP_PE)
 
-def read_FASTA_all_at_once():
-    idx = 1
+def test2():
+    tmp_dict = {}
+
+    for idx in range(1, 20):
+        FILE_NUM_LIST.append(str(idx))
+
     for seq_record in SeqIO.parse(REF_PATH + CDS_FILE, "fasta"):
-        print("id : " + seq_record.id)
-        print("name : " + seq_record.name)
-        print("description : " + seq_record.description)
-        print(repr(seq_record.seq))
-        print(len(seq_record))
-        idx +=1
-        if idx == 10:
-            break
 
-def read_FASTA_head():
-    for seq_record in SeqIO.parse(REF_PATH + DNA_FILE, "fasta"):
-        print("id : " + seq_record.id)
-        print("description : " + seq_record.description)
+        dscript = seq_record.description
+        chrsm = dscript[dscript.index("primary_assembly:ASM275486v1:") + len("primary_assembly:ASM275486v1:"):].split(":")[0]
 
-def just_read():
-    idx = 1
-    with open(REF_PATH + DNA_FILE, "r") as f:
-        while True:
-            idx += 1
-            if idx == 20:
-                break
-            str_line = f.readline()
-            print(str_line)
-            if str_line == "":
-                break
+        if chrsm not in tmp_dict:
+            tmp_dict.update({chrsm: seq_record.seq})
+    with open(WORK_DIR + "marmoset_list.txt", "a") as f:
+
+        for chrsm_key, val in tmp_dict.items():
+            # if chrsm_key in FILE_NUM_LIST:
+            #     continue
+            f.writelines(str(chrsm_key) + "\n")
+            f.writelines(str(val) + "\n")
+            f.writelines(" \n")
 
 start_time = clock()
 print("start >>>>>>>>>>>>>>>>>>")
 # test()
-# just_read()
-read_FASTA_head()
+test2()
 print("::::::::::: %.2f seconds ::::::::::::::" % (clock() - start_time))
 
 
