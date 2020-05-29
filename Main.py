@@ -24,14 +24,50 @@ PAM_SEQ = "NGG"
 BACK_WIN_LEN = 20
 
 INIT_DEEP_PE = [PAM_SEQ, FRONT_WIN_LEN, gRNA_LEN, BACK_WIN_LEN]
-FILE_NUM_LIST = ['X']
+A_or_C_IDX = [4, 10]
+ACTG_RULE = ['A', 'C']
+############## make_deep_pe_input ##############
+BE_BACK_WIN_LEN = 3
+CLEAVAGE_SITE = 3
+MAX_MISMATCH = 3
+REF_SRV_PATH = "FASTA/marmoset"
+INIT_BE = [PAM_SEQ, FRONT_WIN_LEN, gRNA_LEN, BE_BACK_WIN_LEN, CLEAVAGE_SITE]
+INITIAL_CAS_OFF = ['NGG', gRNA_LEN, MAX_MISMATCH, 66, WORK_DIR + "CAS_OFF_FINDER/marmoset_monkey_off_", REF_SRV_PATH, INIT_BE]
+
 ############### end setting env ################
 
 def make_deep_pe_input():
     logic = Logic.Logics()
+    logic_prep = LogicPrep.LogicPreps()
     util = Util.Utils()
 
-    tmp_dict = logic.get_Deep_PE_input(REF_PATH + CDS_FILE, INIT_DEEP_PE)
-    result_dict = logic.group_by_chromosome(tmp_dict, "primary_assembly:ASM275486v1:")
+    trgt_seq_dict = logic_prep.get_target_seq(REF_PATH + CDS_FILE, INIT_DEEP_PE)
+    result_dict = logic_prep.group_by_chromosome(trgt_seq_dict, "primary_assembly:ASM275486v1:")
 
-    util.make_Deep_PE_input_excel(WORK_DIR + "crab_eating/", result_dict, INIT_DEEP_PE)
+    # util.make_Deep_PE_input_excel(WORK_DIR + "crab_eating/", result_dict, INIT_DEEP_PE)
+    util.make_Deep_PE_input_tb_txt(WORK_DIR + "crab_eating/deep_pe_input_crab_eating", result_dict)
+
+def make_deep_cas9_base_editor_input():
+    logic = Logic.Logics()
+    logic_prep = LogicPrep.LogicPreps()
+    util = Util.Utils()
+
+    trgt_seq_dict = logic_prep.get_target_seq_with_clvg_site(REF_PATH + CDS_FILE, INIT_BE)
+    chr_dict = logic_prep.target_seq_with_clvg_site_group_by_chromosome(trgt_seq_dict,
+                                                                        "primary_assembly:ASM275486v1:")
+    a_c_dict = logic.filter_out_by_AorC_rule(chr_dict, A_or_C_IDX, ACTG_RULE)
+
+    util.make_cas_off_finder_input(a_c_dict, INITIAL_CAS_OFF)
+    util.make_deep_cas9_input(WORK_DIR + "deep_cas_9/sample", [a_c_dict], INIT_BE)
+
+
+
+
+
+
+
+start_time = clock()
+print("start >>>>>>>>>>>>>>>>>>")
+# make_deep_pe_input()
+make_deep_cas9_base_editor_input()
+print("::::::::::: %.2f seconds ::::::::::::::" % (clock() - start_time))
