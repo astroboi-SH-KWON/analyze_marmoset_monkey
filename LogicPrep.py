@@ -158,71 +158,67 @@ class LogicPreps:
 
         return tmp_dict
 
-    def merge_cas9_abe_cbe_to_one_list(self, init_dict_arr, init_len):
-        tmp_list = []
-        full_dict = init_dict_arr[0]
+    def merge_cas9_abe_cbe_to_list(self, chr_key, init_dict_arr, result_list):
+        trnscrpt_val = init_dict_arr[0]
         abe_score_dict = init_dict_arr[1]
         cbe_score_dict = init_dict_arr[2]
         cs9_score_dict = init_dict_arr[3]
 
-        pam_seq = init_len[0]
-        add_seq1_len = init_len[1]
-        spacer_len = init_len[2]
-        add_seq2_len = init_len[3]
-        clvg_site = init_len[4]
-        pam_len = len(pam_seq)
+        for trnscrpt_id, vals_arr in trnscrpt_val.items():
+            full_description = vals_arr[0]
+            full_description_arr = full_description.split(" ")
+            gene_id = full_description_arr[3].replace("gene:", "")
+            strand = "+"
+            if ":-1" in full_description_arr[2]:
+                strand = "-"
 
-        for chr_key, trnscrpt_val in full_dict.items():
-            for trnscrpt_id, vals_arr in trnscrpt_val.items():
-                full_description = vals_arr[0]
-                full_description_arr = full_description.split(" ")
-                gene_id = full_description_arr[3].replace("gene:", "")
-                strand = "+"
-                if ":-1" in full_description_arr[2]:
-                    strand = "-"
+            gene_nm = ""
+            description = ""
+            if "gene_symbol:" in full_description:
+                if "description:" in full_description:
+                    gene_nm = full_description[
+                              full_description.index("gene_symbol:") + len("gene_symbol:"):full_description.index(
+                                  "description:")]
+                    description = full_description[full_description.index("description:") + len("description:"):]
+                else:
+                    gene_nm = full_description[
+                              full_description.index("gene_symbol:") + len("gene_symbol:"):]
 
-                gene_nm = ""
-                description = ""
-                if "gene_symbol:" in full_description:
-                    if "description:" in full_description:
-                        gene_nm = full_description[
-                                  full_description.index("gene_symbol:") + len("gene_symbol:"):full_description.index(
-                                      "description:")]
-                        description = full_description[full_description.index("description:") + len("description:"):]
-                    else:
-                        gene_nm = full_description[
-                                  full_description.index("gene_symbol:") + len("gene_symbol:"):]
+            for trgt_idx in range(1, len(vals_arr)):
+                cntxt_seq = vals_arr[trgt_idx][0]
+                clvg_site = vals_arr[trgt_idx][1]
+                cas9_score = 0
+                abe_score = 0
+                cbe_score = 0
 
-                for trgt_idx in range(1, len(vals_arr)):
-                    cntxt_seq = vals_arr[trgt_idx][0]
-                    clvg_site = vals_arr[trgt_idx][1]
-                    cas9_score = 0
-                    abe_score = 0
-                    cbe_score = 0
+                if cntxt_seq in cs9_score_dict:
+                    cas9_score = cs9_score_dict[cntxt_seq]
+                else:
+                    print(cntxt_seq + " doesn't have CAS9 score")
+                if cntxt_seq in abe_score_dict:
+                    abe_score = abe_score_dict[cntxt_seq]
+                else:
+                    print(cntxt_seq + " doesn't have ABE score")
+                if cntxt_seq in cbe_score_dict:
+                    cbe_score = cbe_score_dict[cntxt_seq]
+                else:
+                    print(cntxt_seq + " doesn't have CBE score")
 
-                    if cntxt_seq in cs9_score_dict:
-                        cas9_score = cs9_score_dict[cntxt_seq]
-                    else:
-                        print(cntxt_seq + " doesn't have CAS9 score")
-                    if cntxt_seq in abe_score_dict:
-                        abe_score = abe_score_dict[cntxt_seq]
-                    else:
-                        print(cntxt_seq + " doesn't have ABE score")
-                    if cntxt_seq in cbe_score_dict:
-                        cbe_score = cbe_score_dict[cntxt_seq]
-                    else:
-                        print(cntxt_seq + " doesn't have CBE score")
+                result_list.append([chr_key, gene_nm, description, trnscrpt_id, gene_id, strand, cntxt_seq, clvg_site, cas9_score, float(abe_score), float(cbe_score)])
 
-                    tmp_list.append([chr_key, gene_nm, description, trnscrpt_id, gene_id, strand, cntxt_seq, clvg_site, cas9_score, float(abe_score), float(cbe_score)])
-
-        return tmp_list
-
-    def sort_by_element_top_n(self, trgt_list, idx, max_num):
-        result_list = []
-        for tmp_list in sorted(trgt_list, key=lambda tmp_list: tmp_list[idx], reverse=True):
-            if len(result_list) >= max_num:
-                break
-            result_list.append(tmp_list)
         return result_list
 
+    # TODO
+    def sort_by_element_top_n(self, trgt_list, idx, max_num, result_list):
+        # for tmp_list in sorted(trgt_list, key=lambda tmp_list: tmp_list[idx], reverse=True):
+        #     if len(result_list) >= max_num:
+        #         break
+        #     result_list.append(tmp_list)
+        idx = 0
+        for tmp_list in sorted(trgt_list, key=lambda tmp_list: tmp_list[idx], reverse=True):
+            idx += 1
+            if idx > max_num:
+                break
+            result_list.append(tmp_list)
 
+        return result_list

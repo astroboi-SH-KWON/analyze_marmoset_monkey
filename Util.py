@@ -258,3 +258,50 @@ class Utils:
                         sheet.cell(row=row, column=12, value=abe_score)
                         sheet.cell(row=row, column=13, value=cbe_score)
             workbook.save(filename=result_path + "_" + str(chr_key) + self.ext_xlsx)
+
+    def make_excel_after_sorting(self, path, result_list, init_arr):
+        pam_seq = init_arr[0]
+        add_seq1_len = init_arr[1]
+        spacer_len = init_arr[2]
+        add_seq2_len = init_arr[3]
+        clvg_site = init_arr[4]
+        pam_len = len(pam_seq)
+
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+
+        row = 1
+        sheet.cell(row=row, column=1, value="index")
+        sheet.cell(row=row, column=2, value='chromosome')
+        sheet.cell(row=row, column=3, value='Target gene name')
+        sheet.cell(row=row, column=4, value='Description')
+        sheet.cell(row=row, column=5, value='Ensembl transcript ID')
+        sheet.cell(row=row, column=6, value='Ensembl Gene ID')
+        sheet.cell(row=row, column=7, value='Strand')
+        sheet.cell(row=row, column=8, value='order sgRNA Target sequence')
+        sheet.cell(row=row, column=9, value='order Target context sequence')
+        sheet.cell(row=row, column=10, value='order PAM')
+        sheet.cell(row=row, column=11, value='cleavage site')
+        sheet.cell(row=row, column=12, value='DeepCas9 score')
+        sheet.cell(row=row, column=13, value='ABE score')
+        sheet.cell(row=row, column=14, value='CBE score')
+
+        for val_arr in result_list:
+            row += 1
+            context_seq = val_arr[6]
+            sheet.cell(row=row, column=1, value=str(row -1))
+            sheet.cell(row=row, column=2, value=val_arr[0])
+            sheet.cell(row=row, column=3, value=val_arr[1])
+            sheet.cell(row=row, column=4, value=val_arr[2])
+            sheet.cell(row=row, column=5, value=val_arr[3])
+            sheet.cell(row=row, column=6, value=val_arr[4])
+            sheet.cell(row=row, column=7, value=val_arr[5])
+            sheet.cell(row=row, column=8, value=context_seq[add_seq1_len:-add_seq2_len])
+            sheet.cell(row=row, column=9, value=context_seq)
+            sheet.cell(row=row, column=10, value=context_seq[add_seq1_len + spacer_len:-add_seq2_len])
+            sheet.cell(row=row, column=11, value=val_arr[7])
+            sheet.cell(row=row, column=12, value=val_arr[8])
+            sheet.cell(row=row, column=13, value=val_arr[9])
+            sheet.cell(row=row, column=14, value=val_arr[10])
+
+        workbook.save(filename=path + self.ext_xlsx)
