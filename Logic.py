@@ -50,6 +50,22 @@ class Logics:
         else:
             return False
 
+    """
+    :return
+        result_dict = {chr_key: {trnscrpt_id: [
+                                    'description'
+                                    , ['seq', clvg_site]
+                                    , ['seq', clvg_site] ...
+                                    ]
+                                }
+                        'NTIC01035965.1': {'ENSCJAT00000001565.3': [
+                                                'ENSCJAT00000001565.3 cds primary_assembly:ASM275486v1:NTIC01035965.1:203:857:1 gene:ENSCJAG00000000864.4 gene_biotype:protein_coding transcript_biotype:protein_coding gene_symbol:TMEM190 description:transmembrane protein 190 [Source:HGNC Symbol;Acc:HGNC:29632]'
+                                                , ['GGGGCGCTGTGAAGAAGCCAGCACTGGTGG', 8.384458077709612]
+                                                , ['GCGCTGTGAAGAAGCCAGCACTGGTGGTTG', 8.997955010224949]
+                                                ...
+                                                ]
+                        }
+    """
     def filter_out_by_ACGTU_rule(self, input_dict, window_idx_arr, rule_acgt_arr):
         result_dict = {}
         for chr_key, val_dict in input_dict.items():
@@ -57,7 +73,7 @@ class Logics:
             for trnscrpt_id, vals_arr in val_dict.items():
                 result_dict[chr_key].update({trnscrpt_id: [vals_arr[0]]})
                 for trgt_idx in range(1, len(vals_arr)):
-                    trgt_seq = vals_arr[trgt_idx][0][window_idx_arr[0] -1: window_idx_arr[1]]
+                    trgt_seq = vals_arr[trgt_idx][0][window_idx_arr[0] - 1: window_idx_arr[1]]
                     for rule_acgt in rule_acgt_arr:
                         if rule_acgt in trgt_seq:
                             result_dict[chr_key][trnscrpt_id].append(vals_arr[trgt_idx])

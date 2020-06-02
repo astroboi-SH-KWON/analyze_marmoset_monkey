@@ -50,13 +50,16 @@ def merge():
     a_c_dict = logic.filter_out_by_ACGTU_rule(chr_dict, A_or_C_IDX, ACTG_RULE)
 
     abe_score_dict = logic_prep.get_deep_base_ed_score(WORK_DIR + "deep_ABE/ABE_Efficiency.txt")
-    print(len(abe_score_dict))
     cbe_score_dict = logic_prep.get_deep_base_ed_score(WORK_DIR + "deep_CBE/CBE_Efficiency.txt")
-    print(len(cbe_score_dict))
     cs9_score_dict = logic_prep.get_deep_cas9_tupl(WORK_DIR + "deep_cas_9/", "RANK_final_DeepCas9_Final.txt", "sample.txt")
-    print(len(cs9_score_dict))  # 2421639
 
+    one_merge_list = logic_prep.merge_cas9_abe_cbe_to_one_list([a_c_dict, abe_score_dict, cbe_score_dict, cs9_score_dict], INIT_BE)
+    sort_by_abe_list = logic_prep.sort_by_element_top_n(one_merge_list, -2, 10)
+    # print(sort_by_abe_list)
+    sort_by_cbe_list = logic_prep.sort_by_element_top_n(one_merge_list, -1, 10)
+    # print(sort_by_cbe_list)
 
+    util.
 
 def test():
     logic_prep = LogicPrep.LogicPreps()
@@ -72,8 +75,8 @@ def test():
 
 start_time = clock()
 print("start >>>>>>>>>>>>>>>>>>")
-merge()
 # test()
+merge()
 print("::::::::::: %.2f seconds ::::::::::::::" % (clock() - start_time))
 
 

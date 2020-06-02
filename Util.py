@@ -130,3 +130,131 @@ class Utils:
                 row += 1
                 f.write(str(row) + "\t" + seq_str + "\n")
 
+    def make_merge_tab_txt(self, result_path, init_dict_arr, init_len):
+        full_dict = init_dict_arr[0]
+        abe_score_dict = init_dict_arr[1]
+        cbe_score_dict = init_dict_arr[2]
+        cs9_score_dict = init_dict_arr[3]
+
+        pam_seq = init_len[0]
+        add_seq1_len = init_len[1]
+        spacer_len = init_len[2]
+        add_seq2_len = init_len[3]
+        clvg_site = init_len[4]
+        pam_len = len(pam_seq)
+
+        row = 0
+        with open(result_path + self.ext_txt, 'a') as f:
+            f.write("index\tchromosome\tTarget gene name\tDescription\tEnsembl transcript ID\tEnsembl Gene ID\tStrand\torder sgRNA Target sequence\torder Target context sequence\torder PAM\tcleavage site\tDeepCas9 score\tABE score\tCBE score\n")
+            for chr_key, trnscrpt_val in full_dict.items():
+                for trnscrpt_id, vals_arr in trnscrpt_val.items():
+                    full_description = vals_arr[0]
+                    for trgt_idx in range(1, len(vals_arr)):
+                        cntxt_seq = vals_arr[trgt_idx][0]
+                        clvg_site = vals_arr[trgt_idx][1]
+                        cas9_score = 0
+                        abe_score = 0
+                        cbe_score = 0
+
+                        if cntxt_seq in cs9_score_dict:
+                            cas9_score = cs9_score_dict[cntxt_seq]
+                        else:
+                            print(cntxt_seq + " doesn't have CAS9 score")
+                        if cntxt_seq in abe_score_dict:
+                            abe_score = abe_score_dict[cntxt_seq]
+                        else:
+                            print(cntxt_seq + " doesn't have ABE score")
+                        if cntxt_seq in cbe_score_dict:
+                            cbe_score = cbe_score_dict[cntxt_seq]
+                        else:
+                            print(cntxt_seq + " doesn't have CBE score")
+
+                        row += 1
+                        # f.write(str(row) + "\t" + chr_key + "\t" + "gene_name" + "\t" + "description" + "\t" + trnscrpt_id + "\t" + "gene_id" + "\t" + "strand" + "\t" + cntxt_seq[add_seq1_len:-add_seq2_len] + "\t" + cntxt_seq + "\t" + cntxt_seq[add_seq1_len + spacer_len:-add_seq2_len] + "\t" + str(clvg_site) + "\t" + str(cas9_score) + "\t" + str(abe_score) + "\t" + str(cbe_score) + "\n")
+                        f.write(str(row) + "\t" + chr_key + "\t" + full_description + "\t" + trnscrpt_id + "\t" + "gene_id" + "\t" + "strand" + "\t" + cntxt_seq[add_seq1_len:-add_seq2_len] + "\t" + cntxt_seq + "\t" + cntxt_seq[add_seq1_len + spacer_len:-add_seq2_len] + "\t" + str(clvg_site) + "\t" + str(cas9_score) + "\t" + str(abe_score) + "\t" + str(cbe_score) + "\n")
+
+    def make_merge_excel_by_chr(self, result_path, init_dict_arr, init_len):
+        full_dict = init_dict_arr[0]
+        abe_score_dict = init_dict_arr[1]
+        cbe_score_dict = init_dict_arr[2]
+        cs9_score_dict = init_dict_arr[3]
+
+        pam_seq = init_len[0]
+        add_seq1_len = init_len[1]
+        spacer_len = init_len[2]
+        add_seq2_len = init_len[3]
+        clvg_site = init_len[4]
+        pam_len = len(pam_seq)
+
+        for chr_key, trnscrpt_val in full_dict.items():
+            workbook = openpyxl.Workbook()
+            sheet = workbook.active
+
+            row = 1
+            sheet.cell(row=row, column=1, value="index")
+            sheet.cell(row=row, column=2, value='Target gene name')
+            sheet.cell(row=row, column=3, value='Description')
+            sheet.cell(row=row, column=4, value='Ensembl transcript ID')
+            sheet.cell(row=row, column=5, value='Ensembl Gene ID')
+            sheet.cell(row=row, column=6, value='Strand')
+            sheet.cell(row=row, column=7, value='order sgRNA Target sequence')
+            sheet.cell(row=row, column=8, value='order Target context sequence')
+            sheet.cell(row=row, column=9, value='order PAM')
+            sheet.cell(row=row, column=10, value='cleavage site')
+            sheet.cell(row=row, column=11, value='DeepCas9 score')
+            sheet.cell(row=row, column=12, value='ABE score')
+            sheet.cell(row=row, column=13, value='CBE score')
+            for trnscrpt_id, vals_arr in trnscrpt_val.items():
+                full_description = vals_arr[0]
+                full_description_arr = full_description.split(" ")
+                gene_id = full_description_arr[3].replace("gene:", "")
+                strand = "+"
+                if ":-1" in full_description_arr[2]:
+                    strand = "-"
+
+                gene_nm = ""
+                description = ""
+                if "gene_symbol:" in full_description:
+                    if "description:" in full_description:
+                        gene_nm = full_description[
+                                  full_description.index("gene_symbol:") + len("gene_symbol:"):full_description.index(
+                                      "description:")]
+                        description = full_description[full_description.index("description:") + len("description:"):]
+                    else:
+                        gene_nm = full_description[
+                                  full_description.index("gene_symbol:") + len("gene_symbol:"):]
+
+                for trgt_idx in range(1, len(vals_arr)):
+                        cntxt_seq = vals_arr[trgt_idx][0]
+                        clvg_site = vals_arr[trgt_idx][1]
+                        cas9_score = 0
+                        abe_score = 0
+                        cbe_score = 0
+
+                        if cntxt_seq in cs9_score_dict:
+                            cas9_score = cs9_score_dict[cntxt_seq]
+                        else:
+                            print(cntxt_seq + " doesn't have CAS9 score")
+                        if cntxt_seq in abe_score_dict:
+                            abe_score = abe_score_dict[cntxt_seq]
+                        else:
+                            print(cntxt_seq + " doesn't have ABE score")
+                        if cntxt_seq in cbe_score_dict:
+                            cbe_score = cbe_score_dict[cntxt_seq]
+                        else:
+                            print(cntxt_seq + " doesn't have CBE score")
+                        row += 1
+                        sheet.cell(row=row, column=1, value=str(row - 1))
+                        sheet.cell(row=row, column=2, value=gene_nm)
+                        sheet.cell(row=row, column=3, value=description)
+                        sheet.cell(row=row, column=4, value=trnscrpt_id)
+                        sheet.cell(row=row, column=5, value=gene_id)
+                        sheet.cell(row=row, column=6, value=strand)
+                        sheet.cell(row=row, column=7, value=cntxt_seq[add_seq1_len:-add_seq2_len])
+                        sheet.cell(row=row, column=8, value=cntxt_seq)
+                        sheet.cell(row=row, column=9, value=cntxt_seq[add_seq1_len + spacer_len:-add_seq2_len])
+                        sheet.cell(row=row, column=10, value=clvg_site)
+                        sheet.cell(row=row, column=11, value=cas9_score)
+                        sheet.cell(row=row, column=12, value=abe_score)
+                        sheet.cell(row=row, column=13, value=cbe_score)
+            workbook.save(filename=result_path + "_" + str(chr_key) + self.ext_xlsx)

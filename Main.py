@@ -55,11 +55,27 @@ def make_deep_cas9_base_editor_input():
     trgt_seq_dict = logic_prep.get_target_seq_with_clvg_site(REF_PATH + CDS_FILE, INIT_BE)
     chr_dict = logic_prep.target_seq_with_clvg_site_group_by_chromosome(trgt_seq_dict,
                                                                         "primary_assembly:ASM275486v1:")
-    a_c_dict = logic.filter_out_by_AorC_rule(chr_dict, A_or_C_IDX, ACTG_RULE)
+    a_c_dict = logic.filter_out_by_ACGTU_rule(chr_dict, A_or_C_IDX, ACTG_RULE)
 
     util.make_cas_off_finder_input(a_c_dict, INITIAL_CAS_OFF)
     util.make_deep_cas9_input(WORK_DIR + "deep_cas_9/sample", [a_c_dict], INIT_BE)
 
+def merge_cas9_abe_cbe():
+    logic = Logic.Logics()
+    logic_prep = LogicPrep.LogicPreps()
+    util = Util.Utils()
+
+    trgt_seq_dict = logic_prep.get_target_seq_with_clvg_site(REF_PATH + CDS_FILE, INIT_BE)
+    chr_dict = logic_prep.target_seq_with_clvg_site_group_by_chromosome(trgt_seq_dict,
+                                                                                      "primary_assembly:ASM275486v1:")
+    a_c_dict = logic.filter_out_by_ACGTU_rule(chr_dict, A_or_C_IDX, ACTG_RULE)
+
+    abe_score_dict = logic_prep.get_deep_base_ed_score(WORK_DIR + "deep_ABE/ABE_Efficiency.txt")
+    cbe_score_dict = logic_prep.get_deep_base_ed_score(WORK_DIR + "deep_CBE/CBE_Efficiency.txt")
+    cs9_score_dict = logic_prep.get_deep_cas9_tupl(WORK_DIR + "deep_cas_9/", "RANK_final_DeepCas9_Final.txt", "sample.txt")
+
+    # util.make_merge_tab_txt(WORK_DIR + "marmoset_merge_abe_cbe_cas9", [a_c_dict, abe_score_dict, cbe_score_dict, cs9_score_dict], INIT_BE)
+    util.make_merge_excel_by_chr(WORK_DIR + "merge_cas9_abe_cbe/marmoset_merge_abe_cbe_cas9", [a_c_dict, abe_score_dict, cbe_score_dict, cs9_score_dict], INIT_BE)
 
 
 
@@ -69,5 +85,6 @@ def make_deep_cas9_base_editor_input():
 start_time = clock()
 print("start >>>>>>>>>>>>>>>>>>")
 # make_deep_pe_input()
-make_deep_cas9_base_editor_input()
+# make_deep_cas9_base_editor_input()
+merge_cas9_abe_cbe()
 print("::::::::::: %.2f seconds ::::::::::::::" % (clock() - start_time))
