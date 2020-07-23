@@ -127,8 +127,10 @@ start_time = clock()
 print("start >>>>>>>>>>>>>>>>>>")
 # test()
 # just_read()
-read_FASTA_head()
+read_FASTA_all_at_once()
 print("::::::::::: %.2f seconds ::::::::::::::" % (clock() - start_time))
+
+
 
 
 

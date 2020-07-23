@@ -5,7 +5,7 @@ import LogicPrep
 
 class Logics:
     def __init__(self):
-        self.tmp = ""
+        pass
 
     """
     checkSeqByChar : match sequences by char with rules

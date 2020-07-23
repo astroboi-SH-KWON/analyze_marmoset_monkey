@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6c976628-c28c-4e4a-9361-85781c340802" name="Default Changelist" comment="" />
+    <list default="true" id="6c976628-c28c-4e4a-9361-85781c340802" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/analyze_marmoset_monkey.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/analyze_marmoset_monkey.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/Logic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test2.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,16 +26,16 @@
   <component name="ProjectId" id="1cTakicA30degMiZUH55pygC1pn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/.conda/envs/biopython/python.exe" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager" selected="Python.Test">
+  <component name="RunManager" selected="Python.Test2">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="analyze_marmoset_monkey" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -74,24 +80,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Test2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="analyze_marmoset_monkey" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Test2" />
         <item itemvalue="Python.Test" />
         <item itemvalue="Python.Main" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -108,7 +125,14 @@
       <workItem from="1590644382411" duration="5861000" />
       <workItem from="1590658885156" duration="22423000" />
       <workItem from="1591058922202" duration="28092000" />
-      <workItem from="1591142424394" duration="3633000" />
+      <workItem from="1591142424394" duration="4250000" />
+      <workItem from="1591158521742" duration="1262000" />
+      <workItem from="1591263443139" duration="1239000" />
+      <workItem from="1591266989093" duration="1457000" />
+      <workItem from="1591866492327" duration="1273000" />
+      <workItem from="1591919684084" duration="3324000" />
+      <workItem from="1591941688568" duration="717000" />
+      <workItem from="1592976535779" duration="622000" />
     </task>
     <servers />
   </component>
@@ -116,42 +140,43 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1303" y="273" key="FileChooserDialogImpl" timestamp="1590630083024">
+    <state x="1303" y="273" key="FileChooserDialogImpl" timestamp="1591266068210">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="1303" y="273" key="FileChooserDialogImpl/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1590630083024" />
-    <state width="1857" height="357" key="GridCell.Tab.0.bottom" timestamp="1591144027025">
+    <state x="1303" y="273" key="FileChooserDialogImpl/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591266068210" />
+    <state width="1813" height="340" key="GridCell.Tab.0.bottom" timestamp="1591924549561">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1857" height="357" key="GridCell.Tab.0.bottom/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591144027025" />
-    <state width="1017" height="357" key="GridCell.Tab.0.bottom/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591094324304" />
-    <state width="1857" height="357" key="GridCell.Tab.0.center" timestamp="1591144027025">
+    <state width="1813" height="340" key="GridCell.Tab.0.bottom/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591924549561" />
+    <state width="975" height="1003" key="GridCell.Tab.0.bottom/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591867765622" />
+    <state width="1813" height="340" key="GridCell.Tab.0.center" timestamp="1591924549561">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1857" height="357" key="GridCell.Tab.0.center/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591144027025" />
-    <state width="1017" height="357" key="GridCell.Tab.0.center/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591094324304" />
-    <state width="1857" height="357" key="GridCell.Tab.0.left" timestamp="1591144027025">
+    <state width="1813" height="340" key="GridCell.Tab.0.center/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591924549561" />
+    <state width="975" height="1003" key="GridCell.Tab.0.center/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591867765622" />
+    <state width="1813" height="340" key="GridCell.Tab.0.left" timestamp="1591924549561">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1857" height="357" key="GridCell.Tab.0.left/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591144027025" />
-    <state width="1017" height="357" key="GridCell.Tab.0.left/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591094324304" />
-    <state width="1857" height="357" key="GridCell.Tab.0.right" timestamp="1591144027025">
+    <state width="1813" height="340" key="GridCell.Tab.0.left/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591924549561" />
+    <state width="975" height="1003" key="GridCell.Tab.0.left/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591867765622" />
+    <state width="1813" height="340" key="GridCell.Tab.0.right" timestamp="1591924549561">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1857" height="357" key="GridCell.Tab.0.right/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591144027025" />
-    <state width="1017" height="357" key="GridCell.Tab.0.right/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591094324304" />
-    <state x="1991" y="187" key="SettingsEditor" timestamp="1590557318621">
+    <state width="1813" height="340" key="GridCell.Tab.0.right/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591924549561" />
+    <state width="975" height="1003" key="GridCell.Tab.0.right/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591867765622" />
+    <state x="1991" y="187" key="SettingsEditor" timestamp="1591921793418">
       <screen x="1982" y="-414" width="1018" height="1920" />
     </state>
-    <state x="1991" y="187" key="SettingsEditor/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1590557318621" />
-    <state x="2182" y="369" key="com.intellij.ide.util.TipDialog" timestamp="1590624277666">
+    <state x="1991" y="187" key="SettingsEditor/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591921793418" />
+    <state x="2182" y="369" key="com.intellij.ide.util.TipDialog" timestamp="1591263931041">
       <screen x="1982" y="-414" width="1018" height="1920" />
     </state>
-    <state x="2182" y="369" key="com.intellij.ide.util.TipDialog/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1590624277666" />
-    <state x="900" y="0" width="869" height="1166" key="dock-window-1" timestamp="1591142989641">
+    <state x="2182" y="369" key="com.intellij.ide.util.TipDialog/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591263931041" />
+    <state x="921" y="-8" width="945" height="1096" key="dock-window-1" timestamp="1591267250031">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="900" y="0" width="869" height="1166" key="dock-window-1/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591142989641" />
+    <state x="921" y="-8" width="945" height="1096" key="dock-window-1/0.0.1858.1080/1982.-414.1018.1920@0.0.1858.1080" timestamp="1591267250031" />
+    <state x="921" y="-8" width="945" height="1096" key="dock-window-1/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591263933169" />
     <state x="922" y="0" width="943" height="1087" key="dock-window-2" timestamp="1591144574323">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -169,9 +194,5 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="-7" y="0" width="943" height="1087" key="dock-window-5/0.0.1858.1080/1982.-414.1018.1920@1982.-414.1018.1920" timestamp="1591086884525" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/analyze_marmoset_monkey$Test.coverage" NAME="Test Coverage Results" MODIFIED="1591144027014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/analyze_marmoset_monkey$Main.coverage" NAME="Main Coverage Results" MODIFIED="1590718695318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
